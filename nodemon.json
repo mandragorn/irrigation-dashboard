@@ -1,0 +1,8 @@
+{
+  "verbose": true,
+  "watch": ["server"],
+  "events": {
+    "start": "echo \"nodemon Starting!\" && if [ ! -e bs.started ] ; then touch bs.started; echo 'Starting Browser-sync!'; browser-sync start --config browser-sync.json; fi",
+    "restart": "echo 'nodemon Restarting!!' && echo 'Reloading browser-sync!' && browser-sync reload"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "server": "dest",
+  "files": "dest",
+  "directory": false,
+  "index": "index.html",
+  "reloadDelay": 500
+}
