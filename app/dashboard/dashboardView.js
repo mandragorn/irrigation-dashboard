@@ -15,9 +15,16 @@ var moistureChartView = require('../moisture/moistureChartView');
  */
 module.exports = new (TorsoView.extend({
   template: dashboardTemplate,
+
+  initialize: function() {
+    this.listenTo(moistureChartView, 'change:page', this._setPage);
+  },
   attachTrackedViews: function() {
     this.attachView('moisture-list', moistureListView);
     this.attachView('moisture-chart', moistureChartView);
+  },
+  _setPage: function(moistureChartViewState, newPage) {
+    moistureListView.setPage(newPage);
   },
   _updateChart: function() {
     moistureChartView.update();

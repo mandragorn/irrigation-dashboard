@@ -2,7 +2,10 @@ var _ = require('lodash');
 var TorsoView = require('torso/modules/View');
 var BaseDataService = require('../data-utils/BaseDataService');
 var moistureChartTemplate = require('./moisture-chart-template.hbs');
-var GoogleChartBehavior = require('torso-google-chart');
+var GoogleChartBehavior = require('torso-google-chart/GoogleChartBehavior');
+
+var PAGE_SIZE = 1000;
+
 
 module.exports = new (TorsoView.extend(BaseDataService.mixin({
   template: moistureChartTemplate,
@@ -29,6 +32,7 @@ module.exports = new (TorsoView.extend(BaseDataService.mixin({
       _initializeChartDataSource: function(moistureDataTable) {
         moistureDataTable.addColumn('datetime', 'Date of Measurement');
         moistureDataTable.addColumn('number', 'Moisture');
+        console.log(moistureDataTable);
       },
       _getChartDataSourceRows: function() {
         var moistureCollection = this.view.getPrivateCollection('moisture');
@@ -36,6 +40,7 @@ module.exports = new (TorsoView.extend(BaseDataService.mixin({
         var moistureChartData = _.map(moistureCollectionData, function(data) {
           return [new Date(data.created_at), data.value];
         });
+        console.log(moistureChartData);
         return moistureChartData;
       }
     }
@@ -57,19 +62,21 @@ module.exports = new (TorsoView.extend(BaseDataService.mixin({
 
   initialize: function() {
     this.set('page', 1);
-    this.set('pageSize', 4);
+    this.set('pageSize', PAGE_SIZE);
     this.on('fetched:moisture', function() {
+      console.log('dataUpdated');
       this.getBehavior('moistureChart').trigger('dataUpdated');
     });
+    this.listenTo(this.viewState, 'change:page', this.render);
   },
 
   update: function() {
-    var currentPage = this.get('pageSize');
+    var currentPage = this.get('page');
     var nextPage = currentPage + 1;
     if (nextPage > 10) {
       nextPage = 2;
     }
-    this.set('pageSize', nextPage);
+    this.set('page', nextPage);
 //    this.forceFetch('moisture');
   }
 })))();

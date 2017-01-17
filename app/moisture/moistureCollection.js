@@ -12,7 +12,7 @@ var TorsoModel = require('torso/modules/Model');
  */
 module.exports = new (TorsoCollection.extend({
   model: TorsoModel,
-  url: 'http://192.168.1.2:8090',
+  url: 'http://192.168.1.2/moisture',
   fetchHttpAction: 'POST',
   fullListSize: 0,
   setFullListSize: function(fullListSize) {

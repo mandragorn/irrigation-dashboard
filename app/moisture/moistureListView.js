@@ -3,6 +3,8 @@ var BaseDataService = require('../data-utils/BaseDataService');
 var moistureListTemplate = require('./moisture-list-template.hbs');
 var moistureItemView = require('./moistureItemView');
 
+var PAGE_SIZE = 100;
+
 module.exports = new (TorsoListView.extend(BaseDataService.mixin({
   tagName: 'ul',
   template: moistureListTemplate,
@@ -19,7 +21,7 @@ module.exports = new (TorsoListView.extend(BaseDataService.mixin({
         return {
           pagination: {
             page: this.get('page'),
-            pageSize: 10
+            pageSize: this.get('pageSize')
           }
         };
       }
@@ -29,6 +31,7 @@ module.exports = new (TorsoListView.extend(BaseDataService.mixin({
   initialize: function() {
     this.collection = this.getPrivateCollection('moisture');
     this.set('page', 1);
+    this.set('pageSize', PAGE_SIZE);
   },
 
   setPage: function(page) {

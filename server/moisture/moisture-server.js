@@ -1,3 +1,4 @@
+#!/usr/bin/env nodejs
 /**
  * Moisture RESTful server.
  *
@@ -26,12 +27,19 @@ function allowCrossDomain(request, response, next) {
   response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   response.header('Access-Control-Allow-Headers', 'Content-Type');
 
+  var fullRequestUrl = request.method + ': ' + request.protocol + '://' + request.get('host') + request.originalUrl;
+  console.log('Request!', fullRequestUrl);
   next();
 }
 
 server.use(allowCrossDomain);
 server.use(bodyParser.json());
 server.use(require('express-promise')());
+
+server.get('/', function(request, response) {
+  response.writeHead(200, {'Content-Type': 'text/plain'});
+  response.end('I\'m ALIVE!');
+});
 
 /**
  * POST with the criteria object that supports the following properties:
@@ -138,6 +146,7 @@ server.post('/ids', function(request, response) {
  */
 server.post('/', function(request, response) {
   var moistureDataFromRequest = request.body;
+  console.log(moistureDataFromRequest);
   var newMoistureModel = MoistureModel.deserialize(moistureDataFromRequest);
   var savePromise = newMoistureModel.save();
   response.json(savePromise);
