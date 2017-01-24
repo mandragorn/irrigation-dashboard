@@ -1,0 +1,25 @@
+<div data-moisture-data-container class="control__data-container">
+  <h2>Data from Arduino</h2>
+  {{#if view.fetchInProgress}}
+    (Fetching...)
+  {{/if}}
+  <dl>
+    <dt>Number of measurements taken since last restart:</dt>
+    <dd>{{model.count}}</dd>
+
+    <dt>Dryness value is:</dt>
+    <dd>{{model.valuePercent}} % dry (raw 10-bit value: {{model.value}})</dd>
+
+    <dt>Refresh Interval:</dt>
+    <dd>{{model.refreshInterval}} sec</dd>
+
+    <dt>Last value sent at this time:</dt>
+    <dd>{{moment model.currentSendMs input="X" format="ll LTS"}}</dd>
+
+    <dt>Next value will be sent at this time:</dt>
+    <dd>{{moment model.nextSendMs input="X" format="ll LTS"}}</dd>
+
+    <dt>Last restart:</dt>
+    <dd>{{moment model.lastRestartMs input="X" format="ll LTS"}}</dd>
+  </dl>
+</div>

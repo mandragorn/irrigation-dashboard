@@ -1,4 +1,6 @@
-<div data-moisture-chart-container='true'></div>
-<div>Page #{{view.page}}</div>
-<button data-update='true'>Update</button>
-<div data-other-chart-container='true'></div>
+<div data-message-container class="chart__message">
+  {{#if view.fetchInProgress~}}
+    <span class="chart_fetch-status">Fetching...</span>
+  {{~/if~}}
+</div>
+<div data-moisture-chart-container class="chart__chart"></div>

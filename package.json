@@ -85,9 +85,9 @@
     "express": "4.14.0",
     "express-promise": "0.4.0",
     "handlebars": "4.0.5",
+    "handlebars.moment": "^1.0.4",
     "jquery": "3.1.0",
     "knex": "^0.11.9",
-    "moment": "^2.14.1",
     "pg-promise": "5.2.6",
     "underscore": "1.8.3"
   },

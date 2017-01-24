@@ -6,6 +6,13 @@
    * @author jyoung
    */
 --}}
-<div class="hello-world">Hello world, my name is Josh also!</div>
+<div class='dashboard__navigation'>
+  {{#if view.showChart}}
+    <a href='#control'>Show Control</a>
+  {{/if}}
+  {{#if view.showControl}}
+    <a href='#chart'>Show Chart</a>
+  {{/if}}
+</div>
 <span inject='moisture-chart'></span>
-<span inject='moisture-list'></span>
+<span inject='irrigation-control'></span>

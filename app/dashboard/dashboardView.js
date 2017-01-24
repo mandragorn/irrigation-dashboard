@@ -4,9 +4,8 @@
  */
 var TorsoView = require('torso/modules/View');
 var dashboardTemplate = require('./dashboard-template.hbs');
-var moistureListView = require('../moisture/moistureListView');
 var moistureChartView = require('../moisture/moistureChartView');
-
+var moistureControlView = require('../moisture/moistureControlView');
 /**
  * View that renders the irrigation app dashboard.
  * @class dashboardView
@@ -14,19 +13,40 @@ var moistureChartView = require('../moisture/moistureChartView');
  * @author jyoung
  */
 module.exports = new (TorsoView.extend({
+  tagName: 'main',
   template: dashboardTemplate,
 
   initialize: function() {
-    this.listenTo(moistureChartView, 'change:page', this._setPage);
+    this.set({
+      showChart: true,
+      showControl: false
+    });
+    moistureControlView.deactivate();
+    moistureChartView.activate();
+
+    this.listenTo(this.viewState, 'change:showChart change:showControl', this.render);
   },
+
   attachTrackedViews: function() {
-    this.attachView('moisture-list', moistureListView);
-    this.attachView('moisture-chart', moistureChartView);
+    if (this.get('showChart')) {
+      this.attachView('moisture-chart', moistureChartView, { shared: true });
+    }
+    if (this.get('showControl')) {
+      this.attachView('irrigation-control', moistureControlView, { shared: true });
+    }
   },
-  _setPage: function(moistureChartViewState, newPage) {
-    moistureListView.setPage(newPage);
+
+  showChart: function() {
+    moistureChartView.activate();
+    this.set('showChart', true);
+    this.set('showControl', false);
+    moistureControlView.deactivate();
   },
-  _updateChart: function() {
-    moistureChartView.update();
+
+  showControl: function() {
+    moistureControlView.activate();
+    this.set('showChart', false);
+    this.set('showControl', true);
+    moistureChartView.deactivate();
   }
 }))();

@@ -21,7 +21,9 @@ module.exports = new (Torso.Router.extend({
    * @property routes {Object}
    */
   routes: {
-    '': '_dashboard'
+    '': '_dashboard',
+    'chart': '_chart',
+    'control': '_control'
   },
 
   /**
@@ -41,6 +43,16 @@ module.exports = new (Torso.Router.extend({
    * @private
    */
   _dashboard: function() {
+    this._switchPerspective(dashboardPerspective);
+  },
+
+  _chart: function() {
+    dashboardPerspective.showChart();
+    this._switchPerspective(dashboardPerspective);  
+  },
+
+  _control: function() {
+    dashboardPerspective.showControl();
     this._switchPerspective(dashboardPerspective);
   },
 

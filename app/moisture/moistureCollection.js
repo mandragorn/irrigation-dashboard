@@ -12,7 +12,7 @@ var TorsoModel = require('torso/modules/Model');
  */
 module.exports = new (TorsoCollection.extend({
   model: TorsoModel,
-  url: 'http://192.168.1.2/moisture',
+  url: '/moisture',
   fetchHttpAction: 'POST',
   fullListSize: 0,
   setFullListSize: function(fullListSize) {
@@ -23,6 +23,7 @@ module.exports = new (TorsoCollection.extend({
   },
   fetchIdsByCriteria: function(criteria, options) {
     var callingCollection = options.privateCollection;
+    console.log(_.result(this, 'url') + '/criteria');
     return $.ajax({
       url: _.result(this, 'url') + '/criteria',
       contentType: 'application/json',
